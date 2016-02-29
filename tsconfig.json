@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs"
+  },
+  "compileOnSave": false,
+  "filesGlob": [
+    "src/**/*.ts"
+  ],
+  "files": [
+    "src/Bus.ts",
+    "src/index.ts",
+    "src/MessageBus.ts",
+    "src/Middlewares/DelegateToCommandHandlers.ts",
+    "src/Model/CommandHandler.ts",
+    "src/Model/Message.ts",
+    "src/Model/Middleware.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}
