@@ -8,10 +8,15 @@
   ],
   "files": [
     "src/Bus.ts",
+    "src/DomainEvents.ts",
     "src/index.ts",
     "src/MessageBus.ts",
     "src/Middlewares/DelegateToCommandHandlers.ts",
+    "src/Middlewares/DelegateToEventSubscribers.ts",
+    "src/Middlewares/EnableRecordingDomainEvents.ts",
+    "src/Middlewares/RelaseRecordedDomainEvents.ts",
     "src/Model/CommandHandler.ts",
+    "src/Model/EventSubscriber.ts",
     "src/Model/Message.ts",
     "src/Model/Middleware.ts"
   ],

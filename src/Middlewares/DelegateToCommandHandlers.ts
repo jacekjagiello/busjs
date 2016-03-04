@@ -15,9 +15,9 @@ class DelegateToCommandHandlers implements Middleware
         let commandName = message.name;
 
         let commandHandler = this._findCommandHandlerByHandledCommand(commandName);
-
+        
         if (commandHandler == undefined) {
-            throw new Error(`Command handler for command "${commandName}" is not registered`);
+            throw new Error(`Command handler for command "${commandName}" does not exist`);
         }
 
         commandHandler.handle(message);
@@ -28,7 +28,6 @@ class DelegateToCommandHandlers implements Middleware
     add(commandHandler: CommandHandler)
     {
         this.commandHandlers.push(commandHandler);
-        console.log(this.commandHandlers);
     }
 
     _findCommandHandlerByHandledCommand(commandName) {

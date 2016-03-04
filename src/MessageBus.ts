@@ -1,6 +1,7 @@
 import Middleware from './Model/Middleware'
 
-class MessageBus {
+class MessageBus
+{
     middlewares:Middleware[];
 
     constructor(middlewares: Middleware[] = [])
