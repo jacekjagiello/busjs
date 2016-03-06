@@ -1,17 +1,10 @@
-import Middleware from './../Model/Middleware'
-import EventSubscriber from './../Model/EventSubscriber'
+class DelegateToEventSubscribers {
 
-class DelegateToEventSubscribers implements Middleware
-{
-    eventSubscribers: Array<EventSubscriber>;
-
-    constructor(eventSubscribers = [])
-    {
+    constructor(eventSubscribers = []) {
         this.eventSubscribers = eventSubscribers;
     }
 
-    handle(event, nextMiddleware)
-    {
+    handle(event, nextMiddleware) {
         let eventName = event.name;
 
         let eventSubscriber = this._findEventSubscriberByEvent(eventName);
@@ -21,11 +14,11 @@ class DelegateToEventSubscribers implements Middleware
         }
 
         eventSubscriber.notify(event);
+
         nextMiddleware(event);
     }
 
-    add(eventSubscriber: EventSubscriber)
-    {
+    add(eventSubscriber) {
         this.eventSubscribers.push(eventSubscriber);
     }
 
@@ -33,7 +26,7 @@ class DelegateToEventSubscribers implements Middleware
         let eventSubscriber;
 
         this.eventSubscribers.forEach(subscriber => {
-            if(subscriber.name == eventName+'Subscriber') {
+            if(subscriber.name.indexOf(eventName + 'Subscriber') > -1) {
                 eventSubscriber = subscriber;
             }
         });

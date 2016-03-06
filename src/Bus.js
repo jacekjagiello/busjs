@@ -1,31 +1,25 @@
 import MessageBus from './MessageBus'
-import CommandHandler from './Model/CommandHandler';
-import Middleware from './Model/Middleware'
 import DomainEvents from './DomainEvents'
-import DelegateToCommandHandlers from './Middlewares/DelegateToCommandHandlers';
-import DelegateToEventSubscribers from './Middlewares/DelegateToEventSubscribers';
-import RelaseRecordedDomainEvents from './Middlewares/RelaseRecordedDomainEvents';
-import EnableRecordingDomainEvents from './Middlewares/EnableRecordingDomainEvents';
+
+import DelegateToCommandHandlers from './Middlewares/DelegateToCommandHandlers'
+import DelegateToEventSubscribers from './Middlewares/DelegateToEventSubscribers'
+import RelaseRecordedDomainEvents from './Middlewares/RelaseRecordedDomainEvents'
+import EnableRecordingDomainEvents from './Middlewares/EnableRecordingDomainEvents'
 
 class Bus extends MessageBus
 {
-    commandHandlers: DelegateToCommandHandlers;
-    eventSubscribers: DelegateToEventSubscribers;
-
-    constructor()
-    {
+    constructor() {
         super();
 
         this.commandHandlers = new DelegateToCommandHandlers;
         this.eventSubscribers = new DelegateToEventSubscribers;
 
         super.appendMiddleware(this.commandHandlers);
-        super.appendMiddleware(new RelaseRecordedDomainEvents(this.eventSubscribers));
-        super.prependMiddleware(new EnableRecordingDomainEvents);
+        super.appendMiddleware(new RelaseRecordedDomainEvents(this.eventSubscribers, DomainEvents));
+        super.prependMiddleware(new EnableRecordingDomainEvents(DomainEvents));
     }
 
-    addCommandHandler(commandHandlerName: string, commandHandler)
-    {
+    addCommandHandler(commandHandlerName, commandHandler) {
         let handler = commandHandler;
 
         if(typeof commandHandler === 'object') {
@@ -42,13 +36,16 @@ class Bus extends MessageBus
         });
     }
 
-    addEventSubscriber(eventSubscriberName: string, eventSubscriber)
-    {
+    getCommandHandlers() {
+        return this.commandHandlers.commandHandlers;
+    }
+
+    addEventSubscriber(eventSubscriberName, eventSubscriber) {
         let notify = eventSubscriber;
 
         if(typeof eventSubscriber === 'object') {
-            if (eventSubscriber.handle === undefined) {
-                throw Error("Command handler must have 'handle' method!")
+            if (eventSubscriber.notify === undefined) {
+                throw Error("EventSubscriber must have 'notify' method!")
             }
 
             notify = eventSubscriber.handle;
@@ -58,6 +55,10 @@ class Bus extends MessageBus
             name: eventSubscriberName,
             notify
         });
+    }
+
+    getEventSubscribers() {
+        return this.eventSubscribers.eventSubscribers;
     }
 }
 

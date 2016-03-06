@@ -2,23 +2,22 @@ import DomainEvents from './../DomainEvents'
 
 class EnableRecordingDomainEvents {
 
-    domainEvents() {
-        return this.domainEvents;
+    constructor(domainEvents) {
+        this.domainEvents = domainEvents;
     }
 
     handle(message, nextMiddleware) {
-        DomainEvents.enableRecording();
-
+        this.domainEvents.enableRecording();
 
         try {
             nextMiddleware(message);
         } catch (e) {
-            DomainEvents.disableRecording();
+            this.domainEvents.disableRecording();
 
             throw e;
         }
 
-        DomainEvents.disableRecording();
+        this.domainEvents.disableRecording();
     }
 }
 

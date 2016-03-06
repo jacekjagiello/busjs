@@ -1,7 +1,4 @@
 class DomainEvents {
-    events = [];
-    recording = false;
-
     constructor() {
         this.events = [];
         this.recording = false;

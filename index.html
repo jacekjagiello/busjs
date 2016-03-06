@@ -8,25 +8,6 @@
 <script src="./bundle/bundle.js"></script>
 
 <script type="text/javascript">
-let bus = new Bus();
-
-let createUserHandler = {
-    name: 'CreateUserHandler',
-    handle: (command) => {
-        console.log('create user handler', command.data);
-    }
-};
-
-bus.addCommandHandler('CreateUserHandler', {
-    name: 'CreateUserHandler',
-    handle(command) {
-        console.log('CreateUserHandler')
-        DomainEvents.recordThat('UserWasCreated', command.data);
-    }
-});
-bus.addEventSubscriber('UserWasCreatedSubscriber', (event) => console.log('UserWasCreatedSubscriber: ', event));
-
-bus.handle('CreateUser', {email: 'jacekjagiello47@gmail.com'})
 
 </script>
 </body>

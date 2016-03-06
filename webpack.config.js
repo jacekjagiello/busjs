@@ -1,14 +1,15 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: './src/Bus.js',
     output: {
         filename: './bundle/bundle.js'
     },
 
     devtool: 'source-map',
     resolve: {
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
+        extensions: ['', '.webpack.js', '.web.js', '.js'],
         modulesDirectories: ['node_modules']
     },
 
@@ -17,7 +18,10 @@ module.exports = {
     ],
     module: {
         loaders: [
-            { test: /\.ts$/, loader: 'ts' }
+            {
+                test: path.join(__dirname, 'src'),
+                loader: 'babel-loader'
+            }
         ]
     }
 }

@@ -1,21 +1,14 @@
-import Middleware from './../Model/Middleware'
-import CommandHandler from './../Model/CommandHandler'
+class DelegateToCommandHandlers {
 
-class DelegateToCommandHandlers implements Middleware
-{
-    commandHandlers: Array<CommandHandler>;
-
-    constructor(commandHandlers = [])
-    {
+    constructor(commandHandlers = []) {
         this.commandHandlers = commandHandlers;
     }
 
-    handle(message, nextMiddleware)
-    {
+    handle(message, nextMiddleware) {
         let commandName = message.name;
 
         let commandHandler = this._findCommandHandlerByHandledCommand(commandName);
-        
+
         if (commandHandler == undefined) {
             throw new Error(`Command handler for command "${commandName}" does not exist`);
         }
@@ -25,8 +18,7 @@ class DelegateToCommandHandlers implements Middleware
         nextMiddleware(message);
     }
 
-    add(commandHandler: CommandHandler)
-    {
+    add(commandHandler) {
         this.commandHandlers.push(commandHandler);
     }
 

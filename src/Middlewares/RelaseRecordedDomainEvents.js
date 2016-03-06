@@ -1,25 +1,23 @@
-import DomainEvents from './../DomainEvents'
-
 class RelaseRecordedDomainEvents {
-    eventBus;
 
-    constructor(eventBus) {
-        this.eventBus = eventBus;
+    constructor(eventBus, domainEvents) {
+        this.eventBus = eventBus
+        this.domainEvents = domainEvents
     }
 
     handle(message, nextMiddleware) {
 
         try {
-            nextMiddleware(message);
+            nextMiddleware(message)
         } catch (e) {
-            DomainEvents.erseEvents();
+            this.domainEvents.erseEvents()
 
-            throw e;
+            throw e
         }
 
-        let recordedEvents = DomainEvents.recordedEvents();
+        let recordedEvents = this.domainEvents.recordedEvents()
 
-        DomainEvents.erseEvents();
+        this.domainEvents.erseEvents()
 
         for (var i = 0; i < recordedEvents.length; i++) {
             this.eventBus.handle(recordedEvents[i], nextMiddleware)
