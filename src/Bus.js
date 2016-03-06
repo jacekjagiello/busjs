@@ -9,14 +9,21 @@ import EnableRecordingDomainEvents from './Middlewares/EnableRecordingDomainEven
 class Bus extends MessageBus
 {
     constructor() {
-        super();
+        super()
 
-        this.commandHandlers = new DelegateToCommandHandlers;
-        this.eventSubscribers = new DelegateToEventSubscribers;
+        this.commandHandlers = new DelegateToCommandHandlers
+        this.eventSubscribers = new DelegateToEventSubscribers
 
-        super.appendMiddleware(this.commandHandlers);
-        super.appendMiddleware(new RelaseRecordedDomainEvents(this.eventSubscribers, DomainEvents));
-        super.prependMiddleware(new EnableRecordingDomainEvents(DomainEvents));
+        super.appendMiddleware(this.commandHandlers)
+        super.appendMiddleware(new RelaseRecordedDomainEvents(this.eventSubscribers, DomainEvents))
+        super.prependMiddleware(new EnableRecordingDomainEvents(DomainEvents))
+    }
+
+    handle(messageName, data) {
+        super.handle({
+            name: messageName,
+            data
+        })
     }
 
     addCommandHandler(commandHandlerName, commandHandler) {

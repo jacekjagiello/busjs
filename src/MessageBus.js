@@ -14,8 +14,12 @@ class MessageBus
     }
 
 
-    handle(name, data) {
-        this._callNextMiddleware(0)({name, data});
+    handle(message) {
+        if(!message.name) {
+            throw new Error("Message must be an object and contain 'name' property")
+        }
+
+        this._callNextMiddleware(0)(message);
     }
 
     _callNextMiddleware(index) {

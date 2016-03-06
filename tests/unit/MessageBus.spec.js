@@ -18,10 +18,14 @@ describe('MessageBus', () => {
         messageBus.appendMiddleware(middlewareCallingNextMiddleware)
         messageBus.appendMiddleware(nextMiddleware)
 
-        messageBus.handle('CreateUser')
+        messageBus.handle({name: 'CreateUser'})
 
         middlewareSpy.should.have.been.calledWith()
         nextMidllewareSpy.should.have.been.calledWith()
+    })
+
+    it("throws error if message does not have 'name' property", () => {
+        expect(messageBus.handle.bind(messageBus, 'CreateUser')).to.throw(Error)
     })
 
     it("can append middleware", () => {

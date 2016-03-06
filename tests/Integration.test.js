@@ -15,7 +15,6 @@ describe('Bus', () => {
 
     beforeEach(() => {
         commandHandler = {handle: () => {}}
-
     })
 
     it("Delegates all commands to CommandHandlers", () => {
