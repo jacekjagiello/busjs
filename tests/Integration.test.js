@@ -2,47 +2,41 @@ import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 
-import Bus from 'src/Bus'
-import DomainEvents from 'src/DomainEvents'
+import Bus, { recordThat } from 'src/Bus'
 
 chai.should()
 chai.use(sinonChai)
 
-describe('Bus', () => {
+describe('BusJs', () => {
 
-    let sut = new Bus
-    let commandHandler
-
-    beforeEach(() => {
-        commandHandler = {handle: () => {}}
-    })
+    let bus = new Bus
 
     it("Delegates all commands to CommandHandlers", () => {
-        let commandHandlerSpy = sinon.spy(commandHandler, "handle")
+        let commandHandler = (command) => {
+            expect(command.email).to.equal('john@doe.com')
+        }
 
-        sut.addCommandHandler("CreateUserHandler", commandHandler)
+        bus.addCommandHandler("CreateUserHandler", commandHandler)
 
-        sut.handle("CreateUser", { email: 'test@example.com' })
-
-        commandHandlerSpy.should.have.been.calledWith({
-            name: "CreateUser",
-            data: { email: "test@example.com" }
-        })
+        bus.handle("CreateUser", {email: 'john@doe.com'})
     })
 
     it("Delegates all domain events to EventSubscriber", () => {
-        let commandHandler = (command) => DomainEvents.recordThat("UserWasCreated", command.data)
-        let eventSubscriber = sinon.spy()
+        let commandHandler =  (command) => {
+            recordThat("UserWasCreated", {email: command.email})
+        }
 
-        sut.addCommandHandler("CreateUserHandler", commandHandler)
-        sut.addEventSubscriber("SendNotificationWhenUserWasCreatedSubscriber", eventSubscriber)
+        let eventSubscriber = (event) => {
+            expect(event.email).to.equal('john@doe.com')
+        }
 
-        sut.handle("CreateUser", { email: 'test@example.com' })
+        bus.addCommandHandler("CreateUserHandler", commandHandler)
+        bus.addEventSubscriber("DoSomethingWhenUserWasCreated", eventSubscriber, ["UserWasCreated"])
 
-        eventSubscriber.should.have.been.calledWith()
+        bus.handle("CreateUser", {email: 'john@doe.com'})
     })
 
     it("throws Error if can not find CommandHandler for command", () => {
-        expect(sut.handle.bind(sut, "SendNotification", {email: 'test@example.com'})).to.throw(Error)
+        expect(bus.handle.bind(bus, "SendNotification", {email: 'john@doe.com'})).to.throw(Error)
     })
 })

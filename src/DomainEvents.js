@@ -1,36 +1,36 @@
 class DomainEvents {
     constructor() {
-        this.events = [];
-        this.recording = false;
+        this.events = []
+        this.recording = false
     }
 
     recordThat(eventName, data) {
         if(!this.recording) {
-            return;
+            return
         }
 
-        this.events.push({name: eventName, data});
+        this.events.push(Object.assign({name: eventName}, data))
     }
 
     enableRecording() {
-        this.recording = true;
+        this.recording = true
     }
 
     disableRecording() {
-        this.recording = false;
+        this.recording = false
     }
 
     isRecording() {
-        return this.recording;
+        return this.recording
     }
 
     recordedEvents() {
-        return this.events;
+        return this.events
     }
 
     erseEvents() {
-        this.events = [];
+        this.events = []
     }
 }
 
-export default new DomainEvents;
+export default new DomainEvents

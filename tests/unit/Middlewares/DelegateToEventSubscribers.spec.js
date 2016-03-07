@@ -22,6 +22,7 @@ describe('DelegateToEventSubscribers middleware', () => {
 
         self.sut.add({
             name: 'DoSomethingWhenUserWasCreatedSubscriber',
+            subscribersTo: ['UserWasCreated'],
             notify: eventSubscriber
         });
 
@@ -36,6 +37,7 @@ describe('DelegateToEventSubscribers middleware', () => {
 
         self.sut.add({
             name: 'DoSomethingWhenUserWasCreatedSubscriber',
+            subscribersTo: ['UserWasCreated'],
             notify: () => {}
         });
 

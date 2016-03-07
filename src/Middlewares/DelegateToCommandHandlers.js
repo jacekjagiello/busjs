@@ -1,38 +1,38 @@
 class DelegateToCommandHandlers {
 
     constructor(commandHandlers = []) {
-        this.commandHandlers = commandHandlers;
+        this.commandHandlers = commandHandlers
     }
 
     handle(message, nextMiddleware) {
-        let commandName = message.name;
+        let commandName = message.name
 
-        let commandHandler = this._findCommandHandlerByHandledCommand(commandName);
+        let commandHandler = this._findCommandHandlerByHandledCommand(commandName)
 
         if (commandHandler == undefined) {
-            throw new Error(`Command handler for command "${commandName}" does not exist`);
+            throw new Error(`Command handler for command "${commandName}" does not exist`)
         }
 
-        commandHandler.handle(message);
+        commandHandler.handle(message)
 
-        nextMiddleware(message);
+        nextMiddleware(message)
     }
 
     add(commandHandler) {
-        this.commandHandlers.push(commandHandler);
+        this.commandHandlers.push(commandHandler)
     }
 
     _findCommandHandlerByHandledCommand(commandName) {
-        let commandHandler;
+        let commandHandler
 
         this.commandHandlers.forEach(handler => {
             if(handler.name == commandName+'Handler') {
-                commandHandler = handler;
+                commandHandler = handler
             }
-        });
+        })
 
-        return commandHandler;
+        return commandHandler
     }
 }
 
-export default DelegateToCommandHandlers;
+export default DelegateToCommandHandlers

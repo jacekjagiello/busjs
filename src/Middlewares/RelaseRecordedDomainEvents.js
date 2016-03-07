@@ -25,4 +25,4 @@ class RelaseRecordedDomainEvents {
     }
 }
 
-export default RelaseRecordedDomainEvents;
+export default RelaseRecordedDomainEvents

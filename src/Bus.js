@@ -20,53 +20,55 @@ class Bus extends MessageBus
     }
 
     handle(messageName, data) {
-        super.handle({
-            name: messageName,
-            data
-        })
+        super.handle(Object.assign({name: messageName}, data))
     }
 
     addCommandHandler(commandHandlerName, commandHandler) {
-        let handler = commandHandler;
+        let handler = commandHandler
 
         if(typeof commandHandler === 'object') {
             if (commandHandler.handle === undefined) {
                 throw Error("Command handler must have 'handle' method!")
             }
 
-            handler = commandHandler.handle;
+            handler = commandHandler.handle
         }
 
         this.commandHandlers.add({
             name: commandHandlerName,
             handle: handler
-        });
+        })
     }
 
     getCommandHandlers() {
-        return this.commandHandlers.commandHandlers;
+        return this.commandHandlers.commandHandlers
     }
 
-    addEventSubscriber(eventSubscriberName, eventSubscriber) {
-        let notify = eventSubscriber;
+    addEventSubscriber(eventSubscriberName, eventSubscriber, eventNames) {
+        let notify = eventSubscriber
 
         if(typeof eventSubscriber === 'object') {
             if (eventSubscriber.notify === undefined) {
                 throw Error("EventSubscriber must have 'notify' method!")
             }
 
-            notify = eventSubscriber.handle;
+            notify = eventSubscriber.handle
         }
 
         this.eventSubscribers.add({
             name: eventSubscriberName,
+            subscribersTo: eventNames,
             notify
-        });
+        })
     }
 
     getEventSubscribers() {
-        return this.eventSubscribers.eventSubscribers;
+        return this.eventSubscribers.eventSubscribers
     }
 }
 
-export default Bus;
+export function recordThat(eventName, data) {
+    DomainEvents.recordThat(eventName, data)
+}
+
+export default Bus
