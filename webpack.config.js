@@ -4,18 +4,15 @@ var path = require('path');
 module.exports = {
     entry: './src/Bus.js',
     output: {
-        filename: './bundle/bundle.js'
+        filename: './index.js',
+        libraryTarget: 'umd'
     },
 
-    devtool: 'source-map',
     resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.js'],
         modulesDirectories: ['node_modules']
     },
 
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin()
-    ],
     module: {
         loaders: [
             {
