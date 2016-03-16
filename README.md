@@ -3,7 +3,7 @@ BusJS simple command bus for Javascript apps. It allows you to implement CQRS ar
 
 ## Installation
 
-`npm install bus-js --save`
+`npm install busjs --save`
 
 ## Basic Usage
 
@@ -12,7 +12,7 @@ Every Command must have `name`, so it can be identified. Command is always handl
 
 Let's take a look at exmaples:
 ```javascript
-import Bus from 'bus-js'
+import Bus from 'busjs'
 
 let bus = new Bus;
 
@@ -43,7 +43,7 @@ If your command is callled "RegisterUser", than command handler name must be "Re
 ## Dipatching and handling events
 Through lifcecyle of your application you may want to dipatch events, when something happened. For example we may want to dispatch `UserWasRegistered` event. We can disptach our events in command handler's or in your domain objects. We stick with command handlers in this example.
 ```javascript
-import { recordThat }, Bus from 'bus-js'
+import { recordThat }, Bus from 'busjs'
 
 let bus = new Bus;
 

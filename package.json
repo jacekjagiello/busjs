@@ -1,8 +1,12 @@
 {
   "name": "busjs",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Message bus for Javascript",
   "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JacekJagiello/busjs.git"
+  },
   "scripts": {
     "prepublish": "./node_modules/.bin/webpack",
     "tests": "npm run unit-tests --silent && npm run integration-tests --silent",
@@ -10,7 +14,7 @@
     "integration-tests": "NODE_PATH=. node_modules/.bin/mocha --compilers js:babel-core/register tests/Integration.test.js"
   },
   "author": "Jacek Jagiello",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.6.0",
     "babel-loader": "^6.2.4",
